@@ -24,8 +24,6 @@ class TCFormer(nn.Module):
         self.num_stages = num_stages
         self.grid_stride = sr_ratios[0]
         self.embed_dims = embed_dims
-        self.depths = depths
-        self.sample_ratio = 0.25
         self.sr_ratios = sr_ratios
         self.mlp_ratios = mlp_ratios
         self.sample_ratios = sample_ratios
