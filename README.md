@@ -5,8 +5,8 @@
 ## Introduction
 
 Official code repository for the paper:  
-**Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer**  
-[Wang Zeng, Sheng Jin, Wentao Liu, Chen Qian, Ping Luo, Ouyang Wanli, and Xiaogang Wang]  
+[**Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer**](https://arxiv.org/abs/2204.08680)    
+[Wang Zeng, Sheng Jin, Wentao Liu, Chen Qian, Ping Luo, Wanli Ouyang, and Xiaogang Wang]  
 
 
 ![teaser](images/fig2.png)
