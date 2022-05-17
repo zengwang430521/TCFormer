@@ -1,10 +1,10 @@
-# TCFormer
+# TCFormer (CVPR'2022 Oral)
 
 \[[📜paper](https://arxiv.org/abs/2204.08680)\]
 
 ## Introduction
 
-Official code repository for the *CVPR'2022 Oral* paper:  
+Official code repository for the paper:  
 **Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer**  
 [Wang Zeng, Sheng Jin, Wentao Liu, Chen Qian, Ping Luo, Ouyang Wanli, and Xiaogang Wang]  
 
@@ -12,8 +12,8 @@ Official code repository for the *CVPR'2022 Oral* paper:
 ![teaser](images/fig2.png)
 
 ## TODO
-- [ ] Whole-body pose estimation code & model release.
-
+- [ ] Whole-body pose estimation training/testing codes release.
+- [ ] Whole-body pose estimation model zoo release.
 
 ## Model Zoo
 
@@ -49,6 +49,12 @@ archivePrefix = {arXiv},
 }
 ```
 
+## Acknowledgement
+
+Thanks to:
+
+- [PVT](https://github.com/whai362/PVT)
+- [MMPose](https://github.com/open-mmlab/mmpose)
 
 ## License
 
