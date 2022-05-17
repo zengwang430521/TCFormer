@@ -1,10 +1,19 @@
 # TCFormer
-Code repository for the paper:  
+
+\[[📜paper](https://arxiv.org/abs/2204.08680)\]
+
+## Introduction
+
+Official code repository for the *CVPR'2022 Oral* paper:  
 **Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer**  
 [Wang Zeng, Sheng Jin, Wentao Liu, Chen Qian, Ping Luo, Ouyang Wanli, and Xiaogang Wang]  
 
 
 ![teaser](images/fig2.png)
+
+## TODO
+- [] Whole-body pose estimation code & model release.
+
 
 ## Model Zoo
 
@@ -21,7 +30,6 @@ Classification configs & weights see >>>[here](classification/)<<<.
 
 ## Citation
 If you use this code for a paper please cite:
-
 
 ```
 @ARTICLE{2022arXiv220408680Z,
@@ -40,3 +48,8 @@ archivePrefix = {arXiv},
       adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 ```
+
+
+## License
+
+This project is released under the [Apache 2.0 license](LICENSE).
