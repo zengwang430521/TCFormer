@@ -12,7 +12,7 @@ Official code repository for the *CVPR'2022 Oral* paper:
 ![teaser](images/fig2.png)
 
 ## TODO
-- [] Whole-body pose estimation code & model release.
+- [ ] Whole-body pose estimation code & model release.
 
 
 ## Model Zoo
