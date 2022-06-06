@@ -14,7 +14,6 @@ from mmcv.runner import get_dist_info, init_dist, load_checkpoint
 from mmpose.apis import multi_gpu_test, single_gpu_test
 from mmpose.datasets import build_dataloader, build_dataset
 from mmpose.models import build_posenet
-import tcformer
 
 try:
     from mmcv.runner import wrap_fp16_model
@@ -22,6 +21,7 @@ except ImportError:
     warnings.warn('auto_fp16 from mmpose will be deprecated from v0.15.0'
                   'Please install mmcv>=1.1.4')
     from mmpose.core import wrap_fp16_model
+import tcformer
 
 
 def parse_args():
