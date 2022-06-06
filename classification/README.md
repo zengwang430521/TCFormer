@@ -67,9 +67,12 @@ The directory structure is the standard layout for the torchvision [`datasets.Im
 
 - TCFormer on ImageNet-1K
 
-| Method           | Size | Acc@1 | #Params (M) | Config                                   | Checkpoint                                                                                 | log|
-|------------------|:----:|:-----:|:-----------:|------------------------------------------|--------------------------------------------------------------------------------------------|----|
-| TCFormer        |  224 |  82.3 |    25.6M      | [config](configs/tcformer/tcformer.py)    | 103M [[Google]](https://drive.google.com/file/d/1sIrTzIKFfW5Io2MybIWJoS0sv72Wd-av/view?usp=sharing) | [[Google]](https://drive.google.com/file/d/1xR3aMoWfU9sUznGtqRU6U9zcFCt_9MSk/view?usp=sharing)|
+| Method           | Size | Acc@1 | #Params (M) | Config                                          | Checkpoint                                                                                 | log|
+|------------------|:----:|:-----:|:-----------:|-------------------------------------------------|--------------------------------------------------------------------------------------------|----|
+| TCFormer-light   |  224 |  79.4 |    14.2M    | [config](configs/tcformer/tcformer_light.py)    | 57M [[Google]](https://drive.google.com/file/d/1TvcJCQhHaxXJhGo13i6b5PWErhzIivuD/view?usp=sharing) | [[Google]](https://drive.google.com/file/d/11mb8v_Afx0oDEAD24pYYJSAOEgyo6g2_/view?usp=sharing)|
+| TCFormer         |  224 |  82.3 |    25.6M    | [config](configs/tcformer/tcformer.py)          | 103M [[Google]](https://drive.google.com/file/d/1sIrTzIKFfW5Io2MybIWJoS0sv72Wd-av/view?usp=sharing) | [[Google]](https://drive.google.com/file/d/1xR3aMoWfU9sUznGtqRU6U9zcFCt_9MSk/view?usp=sharing)|
+| TCFormer-large   |  224 |  83.6 |    62.8M    | [config](configs/tcformer/tcformer_large.py)    | 103M [[Google]](https://drive.google.com/file/d/1wu9joQJU807IGW51mIlhK4dNnMze8E1K/view?usp=sharing) | [[Google]](https://drive.google.com/file/d/1iLMSHa4YqnUdtJYeHFqVFLEJOwHwNQBN/view?usp=sharing)|
+
 
 
 ## Evaluation

@@ -1,6 +1,5 @@
 import sys
 sys.path.insert(0, '..')
-import torch
 import torch.nn as nn
 from timm.models.registry import register_model
 from tcformer_module.tcformer import TCFormer as _TCFormer
@@ -55,7 +54,3 @@ def tcformer_large(pretrained=False, **kwargs):
     return model
 
 
-
-model = tcformer()
-input = torch.zeros([2, 3, 224, 224])
-out = model(input)

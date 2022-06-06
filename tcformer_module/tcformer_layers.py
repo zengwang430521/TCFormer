@@ -271,7 +271,7 @@ class TCMlp(nn.Module):
 
 # Attention for dynamic tokens
 class TCAttention(nn.Module):
-    def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0., sr_ratio=1):
+    def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0., sr_ratio=1, use_sr_layer=True):
         super().__init__()
         assert dim % num_heads == 0, f"dim {dim} should be divided by num_heads {num_heads}."
 
@@ -287,9 +287,11 @@ class TCAttention(nn.Module):
         self.proj_drop = nn.Dropout(proj_drop)
 
         self.sr_ratio = sr_ratio
+        self.use_sr_layer = use_sr_layer
         if sr_ratio > 1:
-            self.sr = nn.Conv2d(dim, dim, kernel_size=sr_ratio, stride=sr_ratio)
-            self.norm = nn.LayerNorm(dim)
+            if self.use_sr_layer:
+                self.sr = nn.Conv2d(dim, dim, kernel_size=sr_ratio, stride=sr_ratio)
+                self.norm = nn.LayerNorm(dim)
         self.apply(self._init_weights)
 
     def _init_weights(self, m):
@@ -326,10 +328,15 @@ class TCAttention(nn.Module):
             kv = tmp[:, :C]
             conf_kv = tmp[:, C:]
 
-            kv = self.sr(kv)
-            _, _, h, w = kv.shape
-            kv = kv.reshape(B, C, -1).permute(0, 2, 1).contiguous()
-            kv = self.norm(kv)
+            if self.use_sr_layer:
+                kv = self.sr(kv)
+                _, _, h, w = kv.shape
+                kv = kv.reshape(B, C, -1).permute(0, 2, 1).contiguous()
+                kv = self.norm(kv)
+            else:
+                kv = F.avg_pool2d(kv, kernel_size=self.sr_ratio, stride=self.sr_ratio)
+                kv = kv.reshape(B, C, -1).permute(0, 2, 1).contiguous()
+
             conf_kv = F.avg_pool2d(conf_kv, kernel_size=self.sr_ratio, stride=self.sr_ratio)
             conf_kv = conf_kv.reshape(B, 1, -1).permute(0, 2, 1).contiguous()
 
@@ -353,13 +360,13 @@ class TCAttention(nn.Module):
 class TCBlock(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
-                 drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, sr_ratio=1):
+                 drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, sr_ratio=1, use_sr_layer=True):
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.attn = TCAttention(
             dim,
             num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale,
-            attn_drop=attn_drop, proj_drop=drop, sr_ratio=sr_ratio)
+            attn_drop=attn_drop, proj_drop=drop, sr_ratio=sr_ratio, use_sr_layer=use_sr_layer)
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.norm2 = norm_layer(dim)
@@ -406,7 +413,6 @@ class TCBlock(nn.Module):
         q_dict['x'] = x
 
         return q_dict
-
 
 # CTM block
 class CTM(nn.Module):
