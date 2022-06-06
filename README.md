@@ -1,10 +1,19 @@
-# TCFormer
-Code repository for the paper:  
-**Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer**  
-[Wang Zeng, Sheng Jin, Wentao Liu, Chen Qian, Ping Luo, Ouyang Wanli, and Xiaogang Wang]  
+# TCFormer (CVPR'2022 Oral)
+
+\[[📜paper](https://arxiv.org/abs/2204.08680)\]
+
+## Introduction
+
+Official code repository for the paper:  
+[**Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer**](https://arxiv.org/abs/2204.08680)    
+[Wang Zeng, Sheng Jin, Wentao Liu, Chen Qian, Ping Luo, Wanli Ouyang, and Xiaogang Wang]  
 
 
 ![teaser](images/fig2.png)
+
+## TODO
+- [ ] Whole-body pose estimation training/testing codes release.
+- [ ] Whole-body pose estimation model zoo release.
 
 ## Model Zoo
 
@@ -21,7 +30,6 @@ Classification configs & weights see >>>[here](classification/)<<<.
 
 ## Citation
 If you use this code for a paper please cite:
-
 
 ```
 @ARTICLE{2022arXiv220408680Z,
@@ -40,3 +48,14 @@ archivePrefix = {arXiv},
       adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 ```
+
+## Acknowledgement
+
+Thanks to:
+
+- [PVT](https://github.com/whai362/PVT)
+- [MMPose](https://github.com/open-mmlab/mmpose)
+
+## License
+
+This project is released under the [Apache 2.0 license](LICENSE).
