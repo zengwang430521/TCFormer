@@ -3,8 +3,8 @@ import torch.nn as nn
 from mmcv.cnn import ConvModule
 from mmcv.runner import BaseModule
 from .transformer_utils import trunc_normal_
-from .tcformer_layers import TCBlock, TCGatherBlock
-from .tcformer_utils import token2map, token_downup
+from .tcformer_layers import TCBlock
+from .tcformer_utils import token2map, token_downup, downup_flops, token2map_flops
 import warnings
 import torch.nn.functional as F
 

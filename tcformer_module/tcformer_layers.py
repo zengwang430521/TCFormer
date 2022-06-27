@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from .transformer_utils import DropPath, to_2tuple, trunc_normal_
 from .tcformer_utils import (
     merge_tokens, cluster_dpc_knn, token2map,
-    map2token, token_downup)
+    map2token, token_downup, sra_flops, map2token_flops, token2map_flops, downup_flops, cluster_and_merge_flops)
 
 
 class Mlp(nn.Module):
@@ -204,7 +204,6 @@ class DWConv(nn.Module):
         x = x.transpose(1, 2).view(B, C, H, W)
         x = self.dwconv(x)
         x = x.flatten(2).transpose(1, 2)
-
         return x
 
 
@@ -414,6 +413,7 @@ class TCBlock(nn.Module):
 
         return q_dict
 
+
 # CTM block
 class CTM(nn.Module):
     def __init__(self, sample_ratio, embed_dim, dim_out, k=5):
@@ -447,109 +447,3 @@ class CTM(nn.Module):
         down_dict['map_size'] = [H, W]
 
         return down_dict, token_dict
-
-
-# Attention for dynamic tokens, gather token
-# to reduce k,v number
-class TCGatherAttention(nn.Module):
-    def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.,
-                 sr_ratio=1, extra_gather_layer=True):
-        super().__init__()
-        assert dim % num_heads == 0, f"dim {dim} should be divided by num_heads {num_heads}."
-
-        self.dim = dim
-        self.num_heads = num_heads
-        head_dim = dim // num_heads
-        self.scale = qk_scale or head_dim ** -0.5
-
-        self.q = nn.Linear(dim, dim, bias=qkv_bias)
-        self.kv = nn.Linear(dim, dim * 2, bias=qkv_bias)
-        self.attn_drop = nn.Dropout(attn_drop)
-        self.proj = nn.Linear(dim, dim)
-        self.proj_drop = nn.Dropout(proj_drop)
-
-        self.sr_ratio = sr_ratio
-
-        self.extra_gather_layer = extra_gather_layer
-        if extra_gather_layer:
-            self.gather = nn.Linear(dim, dim)
-            self.norm = nn.LayerNorm(dim)
-            self.act = nn.GELU()
-
-        self.apply(self._init_weights)
-
-    def _init_weights(self, m):
-        if isinstance(m, nn.Linear):
-            trunc_normal_(m.weight, std=.02)
-            if isinstance(m, nn.Linear) and m.bias is not None:
-                nn.init.constant_(m.bias, 0)
-        elif isinstance(m, nn.LayerNorm):
-            nn.init.constant_(m.bias, 0)
-            nn.init.constant_(m.weight, 1.0)
-        elif isinstance(m, nn.Conv2d):
-            fan_out = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
-            fan_out //= m.groups
-            m.weight.data.normal_(0, math.sqrt(2.0 / fan_out))
-            if m.bias is not None:
-                m.bias.data.zero_()
-
-    def forward(self, q_dict, kv_dict):
-        q = q_dict['x']
-        kv = kv_dict['x']
-        B, Nq, C = q.shape
-        Nkv = kv.shape[1]
-        conf_kv = kv_dict['token_score'] if 'token_score' in kv_dict.keys() else kv.new_zeros(B, Nkv, 1)
-
-        q = self.q(q).reshape(B, Nq, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3).contiguous()
-        if 'gather_dict' in q_dict:
-            gather_dict = q_dict['gather_dict']
-
-            tmp = torch.cat([kv, conf_kv], dim=-1)
-            tmp_dict = kv_dict.copy()
-            tmp_dict['x'] = tmp
-            tmp_dict['map_size'] = q_dict['map_size']
-            tmp = token_downup(gather_dict, tmp_dict)
-            kv = tmp[..., :C]
-            conf_kv = tmp[..., C:]
-
-        if self.extra_gather_layer:
-            kv = self.gather(kv)
-            kv = self.norm(kv)
-            kv = self.act(kv)
-
-        kv = self.kv(kv).reshape(B, -1, 2, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4).contiguous()
-        k, v = kv[0], kv[1]
-
-        attn = (q * self.scale) @ k.transpose(-2, -1)
-
-        conf_kv = conf_kv.squeeze(-1)[:, None, None, :]
-        attn = attn + conf_kv
-        attn = attn.softmax(dim=-1)
-        attn = self.attn_drop(attn)
-
-        x = (attn @ v).transpose(1, 2).reshape(B, Nq, C)
-        x = self.proj(x)
-        x = self.proj_drop(x)
-        return x
-
-
-# Transformer block for dynamic tokens
-class TCGatherBlock(TCBlock):
-    def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
-                 drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, sr_ratio=1, extra_gather_layer=True):
-        super(TCBlock, self).__init__()
-        self.norm1 = norm_layer(dim)
-        self.attn = TCGatherAttention(
-            dim,
-            num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale,
-            attn_drop=attn_drop, proj_drop=drop,
-            extra_gather_layer=extra_gather_layer
-        )
-
-        # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
-        self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
-        self.norm2 = norm_layer(dim)
-        mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = TCMlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
-
-        self.apply(self._init_weights)

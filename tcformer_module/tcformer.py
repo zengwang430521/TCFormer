@@ -3,7 +3,10 @@ import torch.nn as nn
 from functools import partial
 import math
 from .tcformer_layers import Block, TCBlock, OverlapPatchEmbed, CTM
-from .tcformer_utils import (load_checkpoint, get_root_logger, token2map)
+from .tcformer_utils import (
+    load_checkpoint, get_root_logger, token2map,
+    token2map_flops, map2token_flops, cluster_and_merge_flops,
+    downup_flops, sra_flops)
 from .transformer_utils import trunc_normal_
 
 
@@ -28,6 +31,8 @@ class TCFormer(nn.Module):
         self.mlp_ratios = mlp_ratios
         self.sample_ratios = sample_ratios
         self.return_map = return_map
+        self.in_channs = in_chans
+        self.k = k
 
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]  # stochastic depth decay rule
         cur = 0

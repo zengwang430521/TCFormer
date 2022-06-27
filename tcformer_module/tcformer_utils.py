@@ -352,6 +352,35 @@ def downup_flops(N_init, C):
     return N_init * (2 + 1 + 1 + C)
 
 
+def cluster_and_merge_flops(num_tokens, dim, k):
+    flops = 0
+    flops += num_tokens * num_tokens * dim  # distance matrix
+    flops += num_tokens * k                 # local density
+    flops += num_tokens * num_tokens        # distance indicator
+    flops += num_tokens * dim               # token merge
+    return flops
+
+
+# def cluster_and_merge_flops(num_tokens, dim, k):
+#     if dim == 128:
+#         num_part = 4 * 4
+#     elif dim == 320:
+#         num_part = 2 * 2
+#     else:
+#         num_part = 1
+#
+#     flops = 0
+#     flops += num_tokens * num_tokens / num_part * dim  # distance matrix
+#     flops += num_tokens * k                 # local density
+#     flops += num_tokens * num_tokens / num_part       # distance indicator
+#     flops += num_tokens * dim               # token merge
+#     return flops
+
+
+def sra_flops(h, w, r, dim):
+    return 2 * h * w * (h // r) * (w // r) * dim
+
+
 def cluster_dpc_knn(token_dict, cluster_num, k=5, token_mask=None):
     """Cluster tokens with DPC-KNN algorithm.
     Return:
