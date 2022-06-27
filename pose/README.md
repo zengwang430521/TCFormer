@@ -51,7 +51,7 @@ Results on COCO-WholeBody v1.0 val with detector having human AP of 56.4 on COCO
 | Arch  | Input Size | Body AP | Body AR | Foot AP | Foot AR | Face AP | Face AR  | Hand AP | Hand AR | Whole AP | Whole AR | ckpt | log |
 | :---- | :--------: | :-----: | :-----: | :-----: | :-----: | :-----: | :------: | :-----: | :-----: | :------: |:-------: |:------: | :------: |
 | [TCFormer](/configs/wholebody/2d_kpt_sview_rgb_img/topdown_heatmap/coco-wholebody/tcformer_mta_coco_wholebody_256x192.py)  | 256x192 | 0.697 | 0.774 | 0.705 | 0.821 | 0.656 | 0.753 | 0.539 | 0.652 | 0.576 | 0.681 | [ckpt](https://drive.google.com/file/d/1tRMhOxiab8BcuImi7B64BRgXPZ2A3BAx/view?usp=sharing) | [log](https://drive.google.com/file/d/1chRPtfEOPJzcuCZ7-nGsPZXZO9kjXdOH/view?usp=sharing) |
-| [TCFormer](/configs/wholebody/2d_kpt_sview_rgb_img/topdown_heatmap/coco-wholebody/tcformer_large_mta_coco_wholebody_384x288.py)  | 384x288 | 0.718 | 0.794 | 0.744 | 0.850 | 0.790 | 0.856 | 0.614 | 0.715 | 0.642 | 0.733 | [ckpt](https://drive.google.com/file/d/1aUIj_-U1EfklVGzELUrierwFNoUp-zrH/view?usp=sharing) | [log](https://drive.google.com/file/d/1p1TTbTg09o4mJf4vDUCrFWPhsPxg-7j7/view?usp=sharing) |
+| [TCFormer_large](/configs/wholebody/2d_kpt_sview_rgb_img/topdown_heatmap/coco-wholebody/tcformer_large_mta_coco_wholebody_384x288.py)  | 384x288 | 0.718 | 0.794 | 0.744 | 0.850 | 0.790 | 0.856 | 0.614 | 0.715 | 0.642 | 0.733 | [ckpt](https://drive.google.com/file/d/1aUIj_-U1EfklVGzELUrierwFNoUp-zrH/view?usp=sharing) | [log](https://drive.google.com/file/d/1p1TTbTg09o4mJf4vDUCrFWPhsPxg-7j7/view?usp=sharing) |
 
 
 
