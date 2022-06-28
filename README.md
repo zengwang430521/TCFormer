@@ -18,7 +18,7 @@ Official code repository for the paper:
 - [x] Flops calculation function.
 
 ## Model Zoo
-You can findd the pretrained checkpoints [here](https://drive.google.com/drive/folders/1HUzEuQnWG-LvyhAz96CthYVZdaSpllTu?usp=sharing).
+You can find the pretrained checkpoints [here](https://drive.google.com/drive/folders/1HUzEuQnWG-LvyhAz96CthYVZdaSpllTu?usp=sharing).
 
 ### Image Classification
 
