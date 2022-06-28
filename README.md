@@ -46,23 +46,15 @@ WholeBody Estimation configs & weights see >>>[here](pose/)<<<.
 
 
 ## Citation
-If you use this code for a paper please cite:
+If you use this code for a paper, please cite:
 
 ```
-@ARTICLE{2022arXiv220408680Z,
-       author = {{Zeng}, Wang and {Jin}, Sheng and {Liu}, Wentao and {Qian}, Chen and {Luo}, Ping and {Ouyang}, Wanli and {Wang}, Xiaogang},
-        title = "{Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer}",
-      journal = {arXiv e-prints},
-     keywords = {Computer Science - Computer Vision and Pattern Recognition},
-         year = 2022,
-        month = apr,
-          eid = {arXiv:2204.08680},
-        pages = {arXiv:2204.08680},
-archivePrefix = {arXiv},
-       eprint = {2204.08680},
- primaryClass = {cs.CV},
-       adsurl = {https://ui.adsabs.harvard.edu/abs/2022arXiv220408680Z},
-      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+@inproceedings{zeng2022not,
+  title={Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer},
+  author={Zeng, Wang and Jin, Sheng and Liu, Wentao and Qian, Chen and Luo, Ping and Ouyang, Wanli and Wang, Xiaogang},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={11101--11111},
+  year={2022}
 }
 ```
 
