@@ -16,6 +16,7 @@ Official code repository for the paper:
 - [x] Whole-body pose estimation model zoo release.
 - [x] TCFormer-large on COCO-WholeBody dataset.
 - [x] Flops calculation function.
+- [x] Integrate TCFormer to [MMPose](https://github.com/open-mmlab/mmpose).
 
 ## Model Zoo
 You can find the pretrained checkpoints [here](https://drive.google.com/drive/folders/1HUzEuQnWG-LvyhAz96CthYVZdaSpllTu?usp=sharing).
