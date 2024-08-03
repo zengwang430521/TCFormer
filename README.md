@@ -1,13 +1,18 @@
-# TCFormer (CVPR'2022 Oral)
+# TCFormer (CVPR'2022 Oral, TPAMI'2024)
 
-\[[📜paper](https://arxiv.org/abs/2204.08680)\]
+\[[CVPR'2022 paper](https://arxiv.org/abs/2204.08680)\]
+\[[TPAMI'2024 paper](https://arxiv.org/pdf/2407.11321)\]
 
 ## Introduction
 
-Official code repository for the paper:  
+Official code repository for the papers:  
 [**Not All Tokens Are Equal: Human-centric Visual Analysis via Token Clustering Transformer**](https://arxiv.org/abs/2204.08680)    
 [Wang Zeng, Sheng Jin, Wentao Liu, Chen Qian, Ping Luo, Wanli Ouyang, and Xiaogang Wang]  
 
+and 
+
+[**TCFormer: Visual Recognition via Token Clustering Transformer**](https://arxiv.org/pdf/2407.11321)    
+[Wang Zeng, Sheng Jin, Lumin Xu, Wentao Liu, Chen Qian, Wanli Ouyang, Ping Luo, and Xiaogang Wang]  
 
 ![teaser](images/fig2.png)
 
@@ -47,7 +52,7 @@ WholeBody Estimation configs & weights see >>>[here](pose/)<<<.
 
 
 ## Citation
-If you use this code for a paper, please cite:
+If you find this project useful in your research, please cite:
 
 ```
 @inproceedings{zeng2022not,
@@ -56,6 +61,14 @@ If you use this code for a paper, please cite:
   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
   pages={11101--11111},
   year={2022}
+}
+
+@article{zeng2024tcformer,
+  title={TCFormer: Visual Recognition via Token Clustering Transformer},
+  author={Zeng, Wang and Jin, Sheng and Xu, Lumin and Liu, Wentao and Qian, Chen and Ouyang, Wanli and Luo, Ping and Wang, Xiaogang},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  year={2024},
+  publisher={IEEE}
 }
 ```
 
